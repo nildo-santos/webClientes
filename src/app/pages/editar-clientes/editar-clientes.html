@@ -1,0 +1,52 @@
+<div class="card shadow m-4">
+    <div class="card-body">
+
+        <h3 class="card-title">Edição de clientes</h3>
+        <p>Preencha os campos para atualizar um cliente no sistema.</p>
+
+        <div *ngIf="mensagem()" class="alert alert-primary mb-3 alert-dismissible fade show" role="alert">
+            <strong>{{ mensagem() }}</strong>
+             <button type="button" class="btn-close" (click)="mensagem.set('')" aria-label="Close"></button>
+        </div>
+
+        <form [formGroup]="formulario" (ngSubmit)="atualizarCliente()">
+
+            <div class="mb-2">
+                <label>Nome do cliente:</label>
+                <input type="text" class="form-control" formControlName="nome"
+                    placeholder="Digite o nome do cliente."/>
+            </div>
+
+            <div class="mb-2">
+                <label>Email do cliente:</label>
+                <input type="text" class="form-control" formControlName="email"
+                    placeholder="Digite o endereço de email."/>
+            </div>
+
+            <div class="mb-2">
+                <label>CPF do cliente:</label>
+                <input type="text" class="form-control" formControlName="cpf"
+                    placeholder="Digite o CPF."/>
+            </div>
+
+            <div class="mb-2">
+                <label>Telefone do cliente:</label>
+                <input type="text" class="form-control" formControlName="telefone"
+                    placeholder="Digite o telefone de contato."/>
+            </div>
+
+            <div class="mb-2">
+                <label>Data de nascimento:</label>
+                <input type="date" class="form-control" formControlName="dataNascimento"/>
+            </div>
+
+            <div class="mb-2">
+                <input type="submit" class="btn btn-primary" 
+                    [disabled]="formulario.invalid"
+                    value="Salvar Alterações"/>
+            </div>
+
+        </form>
+
+    </div>
+</div>

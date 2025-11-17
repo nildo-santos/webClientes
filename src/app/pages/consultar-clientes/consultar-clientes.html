@@ -1,0 +1,73 @@
+<div class="card shadow m-4">
+  <div class="card-body">
+
+    <h3 class="card-title">Consulta de clientes</h3>
+    <p>Listagem de clientes cadastrados no sistema.</p>
+
+    <div *ngIf="mensagemConsulta()" class="alert alert-warning mb-3 alert-dismissible fade show" role="alert">
+        <strong>{{ mensagemConsulta() }}</strong>
+        <button type="button" class="btn-close" (click)="mensagemConsulta.set('')" aria-label="Close"></button>
+    </div>
+
+    <form [formGroup]="formulario" (ngSubmit)="consultarClientes()">
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" formControlName="nome"
+                    placeholder="Digite o nome do cliente desejado"/>
+            </div>
+            <div class="col">
+                <input type="submit" class="btn btn-primary"
+                    [disabled]="formulario.invalid"
+                    value="Pesquisar clientes"/>
+            </div>
+        </div>
+    </form>
+
+    <div *ngIf="mensagemExclusao()" class="alert alert-primary mb-3 alert-dismissible fade show" role="alert">
+        <strong>{{ mensagemExclusao() }}</strong>
+        <button type="button" class="btn-close" (click)="mensagemExclusao.set('')" aria-label="Close"></button>
+    </div>
+
+    <table class="table table-sm" *ngIf="clientes().length > 0">
+      <thead>
+        <tr>
+          <th>Nome do cliente</th>
+          <th>Email</th>
+          <th>CPF</th>
+          <th>Telefone</th>
+          <th>Data de nascimento</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr *ngFor="let c of clientes()">
+            <td>{{ c.nome | uppercase }}</td>
+            <td>{{ c.email | lowercase }}</td>
+            <td>{{ c.cpf }}</td>
+            <td>{{ c.telefone }}</td>
+            <td>{{ c.dataNascimento | date : 'dd/MM/yyyy' }}</td>
+            <td>
+                <button class="btn btn-sm btn-primary me-1" 
+                  [routerLink]="['/pages/editar-clientes', c.id]">
+                  Editar
+                </button>
+                <button class="btn btn-sm btn-danger" 
+                  (click)="excluirCliente(c.id)">
+                  Excluir
+                </button>
+            </td>
+        </tr>
+
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="6">
+            Quantidade de clientes: {{ clientes().length }}
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+  </div>
+</div>
